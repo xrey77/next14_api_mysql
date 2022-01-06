@@ -1,4 +1,6 @@
 {
+    "name": "symfony/symfony-mvc",
+    "description": "Symfony 6 MVC v1.6",
     "type": "project",
     "license": "proprietary",
     "minimum-stability": "stable",
