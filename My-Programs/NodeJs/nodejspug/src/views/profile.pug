@@ -1,0 +1,140 @@
+extends layout
+block content
+    body 
+    h1 User's Profile
+        script 
+            include ../assets/js/jquery-3.5.1.js
+            include ../assets/js/profile.js
+        style
+            include ../assets/css/services.css
+
+    <div class="container bg-secondary" style="margin-top:10px;max-width:50%;border-radius:20px;">
+        <form action="/profileupdate" enctype="multipart/form-data"  method="POST" autocomplete="off">
+          <div class="row">
+            <div class="col">
+                <div class="mb-3" style="margin-top:20px;">
+                    <label for="userid"  class="form-label text-light">User ID No.</label>
+                    <input type="text"  class="form-control" id="userid" name="userid" value="#{Userid}" readonly />
+                </div>
+                <div class="mb-3">
+                    <label for="firstname" class="form-label text-light">First Name</label>
+                    <input type='text' class="form-control" id="firstname" name="firstname" value="#{Firstname}" />
+                </div>
+                <div class="mb-3">
+                    <label for="lastname" class="form-label text-light">Last Name</label>
+                    <input type='text' class="form-control" name='lastname' value="#{Lastname}"/>
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label text-light">Email Address</label>
+                    <input type='email' class="form-control" name='email' value="#{Email}" readonly />
+                </div>
+            </div>
+            <div class="col">
+                <div class="mb-3">
+                    <div style="margin-top:30px;max-width:200px;max-height:220px;background-color:transparent;z-index:0;">
+                        <div style="max-width:200px;max-height:220px;">
+                            <img id="userpic" src="/users/#{Pix}" class="card-img-top" alt="..." style="max-width:200px;max-height:220px;border-radius:5%;">
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-3">
+                   <div style="color:white;z-index:1;margin-top:10px;">
+                    <input name="profilepic" id="profilepic" onchange="checkImage()" type="file" class="form-control-sm text-left" style="color:transparent;width:180px;">
+                   </div>
+                </div>
+            </div>
+          </div>
+          <div class="row w-100">
+                <div class="col">
+                    <div class="mb-3">
+                        <label for="mobileno" class="form-label-sm text-light">Mobile No.</label>
+                        <input type='text' class="form-control" name='mobileno' value="#{Mobile}"/>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="mb-3">
+                        <label for="username" class="form-label-sm text-light"> User Name</label>
+                        <input type='text' class="form-control" name='username' value="#{Username}" readonly />
+                    </div>
+                </div>
+          </div>
+          <div class="row">
+            <div class="col">
+                <div class="form-check">
+                    <label class="form-check-label" for="flexCheckDefault" style="max-width:160px;font-size:12px;">Change Password</label>
+                    <input class="form-check-input" type="checkbox" value="" id="changePwdCheckbox" style="max-width:20px;">
+                </div>            
+            </div>
+            <div class="col">
+                <div class="form-check">
+                    <label class="form-check-label" for="mfaCheckbox" style="margin-left:-10px;max-width:180px;font-size:12px;">Enable 2-Factor Authentication</label>
+                    <input class="form-check-input" type="checkbox" value="" id="mfaCheckbox" style="margin-left:-35px;max-width:20px;">
+                </div>            
+            </div>          
+          </div>
+          <button type="submit" class="btn btn-primary" style="margin-bottom:10px;margin-top:10px;margin-bottom:10px;">save</button>
+        </form>
+        <!-- CHANGE PASSWORD -->
+        <div class="modal fade" id="ChangePWDBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="ChangePWDBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm modal-dialog-centered">
+            <div class="modal-content">
+            <div class="modal-header bg-secondary">
+                <h5 class="modal-title text-light" id="ChangePWDBackdropLabel">CHANGE PASSWORD</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="CANGEFORM" method="POST">
+                    <div class="mb-3">
+                        <input type="hidden" value="#{Username}" id="username1" name="username1">
+                        <label for="pwd1" class="form-label text-dark">New Password</label>
+                        <input type="password" class="form-control" id="pwd1" name="pwd1" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="pwd2" class="form-label text-dark">Confirm New Password</label>
+                        <input type="password" class="form-control" id="pwd2" name="pwd2" required>
+                    </div>
+                    <button id="CHANGEPWD" type="submit" class="btn btn-secondary text-light">save</button>
+                </form>
+            </div>
+            <div class="modal-footer">
+              <div id="CHANGEMSG" class="w-100 text-left text-danger" style="font-size:12px;"></div>
+            </div>
+            </div>
+        </div>
+        </div>
+        <!-- 2-FACTOR AUTHENTICATIOIN -->
+        <div class="modal fade" id="MFABackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="MFABackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+            <div class="modal-header bg-secondary">
+                <h5 class="modal-title text-light" id="MFABackdropLabel">2-FACTOR AUTHENTICATION (TOTP)</h5>
+                <button id="mfaClosex" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                    <div class="mb-3 text-dark">
+                        <span style="text-align:justified;font-size:12px;">You have to install <strong>Google Authenticator</strong> or <strong>Microsoft Authenticator</strong> in your <strong>MOBILE PHONE</strong>, once you you installed it, <strong>scan QRCODE</strong>, the next time you will login, it will show another dialog window for <strong>OTP token verification</strong>.</span>
+                    </div>
+                    <div class="mb-3 text-center">
+                       <img id="qcodeimage" src="#{QRCode}" width="300" heigth="300"/>
+                       <input id="qcode" type="hidden" value="#{QRCode}">
+                    </div>
+                    <div class="text-center">
+                        <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                            <div class="btn btn-outline-secondary bg-secondary text-light">CHOOSE</div>
+                            <input type="radio" class="btn-check" name="btnradio" id="mfaEnable" autocomplete="off">
+                            <label class="btn btn-outline-primary" for="mfaEnable">Enable</label>
+                            <input type="radio" class="btn-check" name="btnradio" id="mfaDisable" autocomplete="off">
+                            <label class="btn btn-outline-primary" for="mfaDisable">Disable</label>
+                        </div>
+                    </div>
+
+            </div>
+            <div class="modal-footer">
+                <div id="mfaMsg1" class="w-100 text-left text-danger" style="font-size:11px;"></div>
+            </div>
+            </div>
+        </div>
+        </div>        
+
+
+    </div>

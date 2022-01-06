@@ -1,0 +1,14 @@
+body {
+    background-image: url('/images/aboutus.jpeg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: white;
+}
+
+h1 {
+    text-align: center;
+}
+
+.footer-color {
+    color:white;
+}

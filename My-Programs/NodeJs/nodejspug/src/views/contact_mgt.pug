@@ -1,0 +1,58 @@
+extends layout
+block content
+    body 
+        h1 Contact Management
+    <div class="container-fluid">    
+        <table class="table table-success">
+        <thead class="table-dark">
+            <tr>
+            <th scope="col">#</th>
+            <th scope="col">Contact Name</th>
+            <th scope="col">Address</th>
+            <th scope="col">Email Address</th>
+            <th scope="col">Mobile No.</th>
+            <th scope="col">Is Active?</th>
+            </tr>
+        </thead>
+        <tbody>
+        each item in Data           
+            <tr>
+                <td>#{item.id}</td>
+                <td>#{item.contact_name}</td>
+                <td>#{item.contact_address}</td>
+                <td>#{item.contact_email}</td>
+                <td>#{item.contact_mobileno}</td>
+                if item.isActive == 1 
+                    <td><input type="checkbox" checked></input></td>
+                else 
+                    <td><input type="checkbox"></input></td>
+                
+            </tr>
+        
+
+        //- - for (for(var i = 0; i < Data.length; i++) {           
+        //-     <tr>
+        //-         <td>data[i].id</td>
+        //-         <td>data[i],contact_name</td>
+        //-         <td>data[i].contact_address</td>
+        //-         <td>data[i].contact_email</td>
+        //-         <td>data[i].contact_mobileno</td>
+        //-         <td>data[i].isActive</td>
+        //-     </tr>
+        //- -}
+        </tbody>
+        </table>
+        h1(class="text-center text-light")= page
+        - if (page > 1)
+            <a class="text-center text-light" style="padding:10px;" href="/contactsmgt?page=#{page+1}"> Next</a>
+
+        - for (var i = iterator; i <= endingLink; i++) 
+            if (i === 1)
+                //- <a class="selectedLink"  href="/contactsmgt?page=#{i}")>#{i}</a>
+            continue
+                <a class="selectedLink"  href="/contactsmgt?page=#{i}")>#{i}</a>
+
+            - if (page < numberOfPage)
+                <a class="text-center text-light" style="padding:10px;" href="/contactsmgt?page=#{page+1}"> Prev</a>
+
+    </div>

@@ -1,0 +1,61 @@
+extends layout
+block content
+    body
+      script
+        include ../assets/js/jquery-3.5.1.js
+        include ../assets/js/mfa.js
+        include ../assets/js/login.js
+    <div class="modal fade" id="loginModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm modal-dialog-centered">
+        <div class="modal-content">
+        <div id="hdr1" class="modal-header bg-primary">
+            <h5 class="modal-title text-light" id="loginModalLabel">Account Log-In</h5>
+            <button type="button" class="btn-close text-light" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+
+            <form id="siginForm" autocomplete="off">
+                <div class="mb-3">
+                  <label for="uname" class="form-label text-dark">User Name</label>
+                  <input type="text" class="form-control" id="uname" name="uname" required>
+                </div>
+                <div class="mb-3">
+                   <label for="pword" class="form-label text-dark">Password</label>
+                   <input type="password" class="form-control" id="pword" name="pword" required>
+                </div>
+                <button id="submitSignin" type="submit" class="btn btn-primary">log-in</button>
+                <a style="font-size:10px;float:right;" href="/forgot">forgot password?</a>
+            </form>
+
+        </div>
+        <div id="ftr" class="modal-footer">
+           <div id="loginMsg" class="w-100 text-left text-danger" style="font-size:12px;"></div>
+        </div>        
+        </div>
+    </div>
+    </div>
+    <!-- MFA  -->
+    <div class="modal fade" id="mfaAuthentication" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="mfaAuthModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm modal-dialog-centered">
+        <div class="modal-content">
+        <div class="modal-header bg-success">
+            <h5 class="modal-title text-light" id="mfaAuthModalLabel">2-Factor Authenticator</h5>
+            <button id="mfaClose" type="button" class="btn-close text-light" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+
+            <form id="mfaAuthForm" autocomplete="off">
+                <div class="mb-3">
+                  <label for="mfatoken" class="form-label text-dark">Enter 6 digits OTP Token</label>
+                  <input type="text" class="form-control" id="mfatoken" name="mfatoken" required>
+                </div>
+                <button id="submitMfaAuth" type="submit" class="btn btn-primary">verify</button>
+            </form>
+
+        </div>
+        <div class="modal-footer">
+           <div id="mfaAuthMsg" class="w-100 text-left text-danger" style="font-size:12px;"></div>
+        </div>        
+        </div>
+    </div>
+    </div>

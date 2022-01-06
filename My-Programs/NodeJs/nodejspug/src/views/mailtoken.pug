@@ -1,0 +1,31 @@
+extends layout
+block content
+    include changepassword.pug
+    body
+      script
+        include ../assets/js/jquery-3.5.1.js
+        include ../assets/js/mailtoken.js
+    <div class="modal fade" id="mailTokenModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm modal-dialog-centered">
+            <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <h5 class="modal-title text-light" id="loginModalLabel">Mail Token Verification</h5>
+                <button type="button" class="btn-close text-light" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <form id="mtokenForm" method="POST" autocomplete="off">
+                    <div class="mb-3">
+                    <label for="mtoken" class="form-label text-dark">Enter Email 6 digit mail token</label>
+                    <input type="text" class="form-control" id="mtoken" name="mtoken" required>
+                    </div>
+                    <button id="submitMtoken" type="submit" class="btn btn-primary">verify</button>
+                </form>
+
+            </div>
+            <div class="modal-footer">
+            <div id="mtokenMsg" class="w-100 text-left text-danger" style="font-size:12px;"></div>
+            </div>        
+            </div>
+        </div>
+    </div>

@@ -1,0 +1,74 @@
+extends layout
+block content
+    body 
+      script
+        include ../assets/js/jquery-3.5.1.js
+        include ../assets/js/register.js
+    <div class="modal fade" id="registerModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+        <div class="modal-header bg-primary">
+            <h5 class="modal-title text-light" id="registerModalLabel">Account Registration</h5>
+            <button id="regClose" type="button" class="btn-close text-light" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+
+            <form id="regForm" method="POST" autocomplete="off">
+                <div class="row">
+                    <div class="col-4">
+                      <label for="firstname" class="form-label-sm text-dark">First Name</label>
+                    </div>
+                    <div class="col">
+                      <input type="text" class="form-control-sm text-left" id="firstname" name="firstname" autofocus="true" required>
+                    </div>
+                </div>
+                <div class="row" style="margin-top:10px;">
+                    <div class="col-4">
+                      <label for="lastname" class="form-label-sm text-dark">Last Name</label>
+                    </div>
+                    <div class="col">
+                      <input type="text" class="form-control-sm" id="lastname" name="lastname" required>
+                    </div>
+                </div>
+                <div class="row" style="margin-top:10px;">
+                    <div class="col-4">
+                      <label for="email" class="form-label text-dark">Email Address</label>
+                    </div>
+                    <div class="col">
+                      <input type="email" class="form-control-sm" id="email" name="email" required>
+                    </div>
+                </div>
+                <div class="row" style="margin-top:10px;">
+                    <div class="col-4">
+                      <label for="mobileno" class="form-label-sm text-dark">Mobile No.</label>
+                    </div>
+                    <div class="col">
+                      <input type="text" class="form-control-sm" id="mobileno" name="mobileno" required>
+                    </div>
+                </div>
+                <div class="row" style="margin-top:10px;">
+                    <div class="col-4">
+                       <label for="username" class="form-label-sm text-dark">User Name</label>
+                    </div>
+                    <div class="col">
+                       <input type="text" class="form-control-sm" id="username" name="username" required>
+                    </div>
+                </div>
+                <div class="row" style="margin-top:10px;">
+                    <div class="col-4">
+                      <label for="password" class="form-label-sm text-dark">Password</label>
+                    </div>
+                    <div class="col">
+                      <input type="password" class="form-control-sm" id="pword" name="pword" required>
+                    </div>
+                </div>
+                <button id="subRegform" type="submit" class="btn btn-primary">register</button>
+                <button id="regReset" type="reset" class="btn btn-secondary">reset</button>
+            </form>
+        </div>
+        <div class="modal-footer">
+           <div id="regMsg" class="w-100 text-left text-danger" style="font-size:12px;"></div>
+        </div>        
+        </div>
+    </div>
+    </div>

@@ -1,0 +1,10 @@
+body {
+    background-image: url('/images/services.jpeg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: white;
+}
+
+h1, h3 {
+    text-align: center;
+}
