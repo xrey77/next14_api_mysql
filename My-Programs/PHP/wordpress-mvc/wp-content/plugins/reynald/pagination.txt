@@ -1,0 +1,54 @@
+function test_function() {
+
+    global $wpdb;
+
+    $query = "
+        (SELECT * FROM wp_18_posts
+        INNER JOIN wp_18_term_relationships ON wp_18_posts.ID=wp_18_term_relationships.object_id  
+        WHERE post_type = 'post' 
+        AND post_status = 'publish' 
+        AND term_taxonomy_id = '2')
+
+        UNION ALL
+
+        (SELECT * FROM wp_17_posts
+        INNER JOIN wp_17_term_relationships ON wp_17_posts.ID=wp_17_term_relationships.object_id  
+        WHERE post_type = 'post' 
+        AND post_status = 'publish' 
+        AND term_taxonomy_id = '2')";
+
+    $total_query = "SELECT COUNT(1) FROM (${query}) AS combined_table";
+    $total = $wpdb->get_var( $total_query );
+    $items_per_page = 1;
+    $page = isset( $_GET['cpage'] ) ? abs( (int) $_GET['cpage'] ) : 1;
+    $offset = ( $page * $items_per_page ) - $items_per_page;
+    $latestposts = $wpdb->get_results( $query . " ORDER BY post_date LIMIT ${offset}, ${items_per_page}" );
+
+    foreach ($latestposts as $latestpost) {
+        $da_id = $latestpost->ID;
+        $da_title = $latestpost->post_title;
+        $da_content = strip_tags($latestpost->post_content);
+        $da_content = wp_trim_words($da_content, 55);
+        $da_link = $latestpost->guid;
+        $da_date = $latestpost->post_date;
+        $da_date = date('F j, Y', strtotime($da_date));
+
+        echo '
+        <div class="ldapost">
+        <h2 class="lheader"><a href="'.$da_link.'">'.$da_title.'</a></h2>
+        <span class="ldate">'.$da_date.'</span>
+        <span class="lcontent">'.$da_content.'…</span><br>
+        <a class="button btnright" href="'.$da_link.'">Continue Reading</a>
+        </div>
+        ';
+    }
+
+    echo paginate_links( array(
+        'base' => add_query_arg( 'cpage', '%#%' ),
+        'format' => '',
+        'prev_text' => __('&laquo;'),
+        'next_text' => __('&raquo;'),
+        'total' => ceil($total / $items_per_page),
+        'current' => $page
+    ));
+}
