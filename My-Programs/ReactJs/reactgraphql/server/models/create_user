@@ -1,0 +1,42 @@
+# create a new user
+
+mutation {
+  createUser(
+    id: 1
+    userId: 1  
+    name: "Jigoro Gragasin"
+    email: "jigoro@yahoo.com"
+    password: "Reynald88"
+  ) {
+        name
+        email
+    recipes{
+        id
+        title
+        ingredients
+        direction        
+    }
+  }
+}
+
+CREATE TABLE Users(
+   id INTEGER PRIMARY KEY AUTOINCREMENT,
+   name text UNIQUE,
+   email text UNIQUE,
+   password text,
+   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+)
+   
+#list all recipes
+{
+  allRecipes {
+    id
+    title
+    ingredients
+    direction
+  }
+}
+
+
+
